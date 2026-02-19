@@ -1,0 +1,8 @@
+# Theta Lake credentials
+.env.theta-lake
+
+# Node
+node_modules/
+
+# OS files
+.DS_Store
