@@ -252,6 +252,80 @@ Returns all comments on a record, including nested replies.
 
 ---
 
+## POST /records/{id}/comments — Create a comment
+
+**Permission:** `comments:create` | **Rate Limit:** medium
+
+Creates a new comment on a record. Can be a top-level comment or a reply to an existing comment.
+
+### Request Body
+
+```json
+{
+  "comment": "This needs further review",
+  "parent_id": null
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `comment` | string | Yes | Text content of the comment |
+| `parent_id` | integer | No | ID of the top-level parent comment when posting a reply. Must not be an ID of another reply |
+
+### Example
+
+```bash
+# Create a top-level comment
+./scripts/tl-curl.sh POST /records/501263/comments -d '{"comment":"Flagging for review"}'
+
+# Reply to comment 12345
+./scripts/tl-curl.sh POST /records/501263/comments -d '{"comment":"Agreed, escalating","parent_id":12345}'
+```
+
+---
+
+## PUT /records/{id}/comments/{comment_id} — Update a comment
+
+**Permission:** `comments:update` | **Rate Limit:** medium
+
+Updates the text content of an existing comment.
+
+### Request Body
+
+```json
+{
+  "comment": "Updated review note"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `comment` | string | Yes | Updated text content of the comment |
+
+### Example
+
+```bash
+# Update comment 12345 on record 501263
+./scripts/tl-curl.sh PUT /records/501263/comments/12345 -d '{"comment":"Updated: confirmed risk after review"}'
+```
+
+---
+
+## DELETE /records/{id}/comments/{comment_id} — Delete a comment
+
+**Permission:** `comments:delete` | **Rate Limit:** medium
+
+Deletes a comment from a record.
+
+### Example
+
+```bash
+# Delete comment 12345 from record 501263
+./scripts/tl-curl.sh DELETE /records/501263/comments/12345
+```
+
+---
+
 ## GET /records/{id}/shareable_link — Get shareable link
 
 **Permission:** `records:read` | **Rate Limit:** heavy

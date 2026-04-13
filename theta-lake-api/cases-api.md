@@ -67,6 +67,25 @@ Same body as POST (all fields optional for update).
 ```
 - Max 100 record IDs per request
 
+### PUT /cases/{id}/managers — Add manager to case
+**Permission:** `cases:update` | **Rate Limit:** medium
+
+**Request Body:**
+```json
+{
+  "user_id": 42
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `user_id` | integer | Yes | ID of the user to add as a case manager |
+
+### DELETE /cases/{id}/managers/{user_id} — Remove manager from case
+**Permission:** `cases:update` | **Rate Limit:** medium
+
+Removes the specified user from the case's manager list.
+
 ### PUT /cases/{id}/close — Close a case
 **Permission:** `cases:update` | **Rate Limit:** heavy
 
@@ -111,6 +130,12 @@ No body required. Reopens a previously closed case.
 
 # Add records to case 271
 ./scripts/tl-curl.sh POST /cases/271/records -d '{"ids":[12345,67890]}'
+
+# Add user 42 as a manager of case 271
+./scripts/tl-curl.sh PUT /cases/271/managers -d '{"user_id":42}'
+
+# Remove user 42 as a manager from case 271
+./scripts/tl-curl.sh DELETE /cases/271/managers/42
 
 # Close case 271
 ./scripts/tl-curl.sh PUT /cases/271/close -d '{"close_date":"2026-01-31T23:59:59.000Z"}'

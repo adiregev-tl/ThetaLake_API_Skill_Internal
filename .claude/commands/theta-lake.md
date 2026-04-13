@@ -50,7 +50,7 @@ For complex endpoints, read the detailed reference file:
 
 For exact schema details, grep the OpenAPI spec:
 ```
-Grep pattern="SchemaName" path="$PROJECT_DIR/theta_lake_api_v1_23.yml"
+Grep pattern="SchemaName" path="$PROJECT_DIR/theta_lake_api_v1.yml"
 ```
 
 ### Step 4: Compose the curl Command

@@ -76,12 +76,12 @@ Rules define which identities are placed under a legal hold, with specific roles
 | `start_date` | date-time | No | Start date for the hold (RFC3339) |
 | `end_date` | date-time | No | End date for the hold (RFC3339) |
 
-### PUT /legal_hold/{id}/rules/{rule-id} — Update a rule
+### PUT /legal_hold/{id}/rules/{rule_id} — Update a rule
 **Permission:** `legal_hold:update` | **Rate Limit:** heavy
 
 Same body as POST (all required fields must be provided).
 
-### DELETE /legal_hold/{id}/rules/{rule-id} — Delete a rule
+### DELETE /legal_hold/{id}/rules/{rule_id} — Delete a rule
 **Permission:** `legal_hold:delete` | **Rate Limit:** heavy
 
 Returns: `"Identity removed from legal hold rule"`

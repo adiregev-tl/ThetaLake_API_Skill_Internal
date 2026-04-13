@@ -42,6 +42,8 @@
 | GET | `/cases/{id}/records` | List records in a case. Params: `page_token`, `max` | `cases:read` | medium |
 | POST | `/cases/{id}/records` | Add records to a case. Body: `record_ids` (array of ints) | `cases:update` | medium |
 | DELETE | `/cases/{id}/records` | Remove records from a case. Body: `record_ids` (array of ints) | `cases:update` | medium |
+| PUT | `/cases/{id}/managers` | Add manager to a case. Body: `user_id` (required) | `cases:update` | medium |
+| DELETE | `/cases/{id}/managers/{user_id}` | Remove manager from a case | `cases:update` | medium |
 | PUT | `/cases/{id}/close` | Close a case. Body: `resolution` (required) | `cases:update` | medium |
 | PUT | `/cases/{id}/open` | Open a case | `cases:update` | medium |
 
@@ -133,8 +135,8 @@
 | GET | `/legal_hold/roles` | List legal hold roles | `legal_hold:read` | medium |
 | GET | `/legal_hold/{id}/rules` | List rules for a legal hold. Params: `page_token`, `max` | `legal_hold:read` | medium |
 | POST | `/legal_hold/{id}/rules` | Create a rule. Body: `identity_id` (required), `roles[]` (required, from /legal_hold/roles), `start_date`, `end_date` | `legal_hold:update` | heavy |
-| PUT | `/legal_hold/{id}/rules/{rule-id}` | Update a legal hold rule. Same body as POST | `legal_hold:update` | heavy |
-| DELETE | `/legal_hold/{id}/rules/{rule-id}` | Delete a legal hold rule | `legal_hold:delete` | heavy |
+| PUT | `/legal_hold/{id}/rules/{rule_id}` | Update a legal hold rule. Same body as POST | `legal_hold:update` | heavy |
+| DELETE | `/legal_hold/{id}/rules/{rule_id}` | Delete a legal hold rule | `legal_hold:delete` | heavy |
 
 ## Org Units
 
@@ -161,6 +163,9 @@
 |--------|------|---------|------------|------------|
 | GET | `/records/{id}/archive_handles` | Get archive handles for a record (id or UUID) | `records:read` | heavy |
 | GET | `/records/{id}/comments` | Get comments for a record (id or UUID) | `comments:read` | medium |
+| POST | `/records/{id}/comments` | Create a comment on a record. Body: `comment` (required), `parent_id` (optional, for replies) | `comments:create` | medium |
+| PUT | `/records/{id}/comments/{comment_id}` | Update a comment. Body: `comment` (required) | `comments:update` | medium |
+| DELETE | `/records/{id}/comments/{comment_id}` | Delete a comment | `comments:delete` | medium |
 | GET | `/records/{id}/content` | Download original record content as binary (**licensed**) | `records:read` | heavy |
 | GET | `/records/{id}/policy_hits` | Get policy hits/detections for a record (**licensed**) | `records:read` | heavy |
 | GET | `/records/{id}/sentences` | Get sentences/transcribed text for a record (**licensed**) | `records:read` | heavy |
