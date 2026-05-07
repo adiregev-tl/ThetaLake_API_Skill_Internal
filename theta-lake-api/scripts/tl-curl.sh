@@ -35,7 +35,7 @@ if [[ $# -lt 2 ]]; then
   exit 1
 fi
 
-METHOD="${1^^}"
+METHOD=$(printf '%s' "$1" | tr '[:lower:]' '[:upper:]')
 ENDPOINT="$2"
 shift 2
 
@@ -106,7 +106,7 @@ if ! execute_request "$@" 2>/tmp/tl-curl-stderr; then
     echo "Token expired, refreshing..." >&2
     TL_API_TOKEN=""
     TOKEN=$(get_token) || exit 1
-    CURL_ARGS[5]="Authorization: Bearer $TOKEN"
+    CURL_ARGS[4]="Authorization: Bearer $TOKEN"
     execute_request "$@" 2>&1
   else
     echo "$stderr_output" >&2

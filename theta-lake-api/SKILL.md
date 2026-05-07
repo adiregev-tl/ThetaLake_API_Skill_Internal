@@ -7,13 +7,18 @@ description: Use when helping with Theta Lake API requests, including finding en
 
 Use this skill when the user asks to work with the Theta Lake API. Help them map natural language requests to the right API endpoints, compose calls, interpret responses, and safely execute requests when appropriate.
 
-## Credentials
+## Execution path: prefer MCP, fall back to curl
 
-Credentials are loaded by `scripts/tl-curl.sh` from `.env.theta-lake` in this skill directory. The file should define:
+If `mcp__theta-lake__*` tools are available in the session, prefer them — they handle auth, pagination, and workspace context automatically and never expose tokens. Use the curl wrapper only when the operation isn't covered by an MCP tool, or when the user explicitly asks for a raw request.
 
-- `TL_BASE_URL`
-- Either `TL_API_TOKEN`
-- Or `TL_CLIENT_ID`, `TL_CLIENT_SECRET`, and `TL_TOKEN_URL`
+## Credentials (curl wrapper only)
+
+`scripts/tl-curl.sh` loads credentials from `.env.theta-lake` in this skill directory. Required:
+
+- `TL_BASE_URL` — e.g. `https://your-tenant.thetalake.com/api/v1`
+- **One of:**
+  - `TL_API_TOKEN` (static bearer), or
+  - `TL_CLIENT_ID` + `TL_CLIENT_SECRET` + `TL_TOKEN_URL` (OAuth client credentials; the wrapper auto-refreshes on 401)
 
 Never print full tokens or secrets. Mask tokens as `****...last4` if they must be referenced.
 
@@ -37,7 +42,7 @@ For detailed parameters, use the relevant reference:
 - Other endpoints: `other-endpoints-api.md`
 - Shared pagination, errors, and date patterns: `common-patterns.md`
 
-For exact schemas, inspect `theta_lake_api_v1.yml` or `theta_lake_api_v1_23.yml`.
+For exact schemas, inspect `theta_lake_api_v1.yml` (OpenAPI 3.0.3, version 1.23.0).
 
 ## Workflow
 
