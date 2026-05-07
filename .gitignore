@@ -1,5 +1,7 @@
-# Theta Lake credentials
-.env.theta-lake
+# Environment and credentials
+.env*
+!.env.example
+!.env.theta-lake.example
 
 # Node
 node_modules/
